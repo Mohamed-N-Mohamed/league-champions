@@ -1,9 +1,6 @@
 import React from "react";
 import Showcase from "./Showcase";
-import { Routes, Route, Link, BrowserRouter } from "react-router-dom";
-
-import Champions from "../pages/Champions";
-import Home from "../pages/Home";
+import { Link } from "react-router-dom";
 
 const Navbar = () => {
   return (
@@ -21,11 +18,6 @@ const Navbar = () => {
               <Link to='/contact'>contact</Link>
             </li>
           </ul>
-
-          <Routes>
-            <Route path='/' element={<Home />} />
-            <Route path='/champions' element={<Champions />} />
-          </Routes>
           <Showcase />
         </div>
       </header>

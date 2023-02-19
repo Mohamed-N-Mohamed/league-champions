@@ -1,7 +1,7 @@
 import React from "react";
 
 const Champion = ({ champions }) => {
-  console.log(typeof champions)
+
   return (
     <div>
       {/* {champions.length === 0 &&(

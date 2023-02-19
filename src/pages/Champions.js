@@ -10,36 +10,44 @@ const Champions = () => {
   }, []);
 
   const fetchChampions = async () => {
-    const options = {
-      method: "GET",
-      url: "https://league-of-legends-champions.p.rapidapi.com/champions/en-gb",
-      params: { page: "0", size: "10", role: "fighter" },
-      headers: {
-        "X-RapidAPI-Key": `${process.env.REACT_APP_API_KEY}`,
-        "X-RapidAPI-Host": "league-of-legends-api1.p.rapidapi.com",
-      },
-    };
+    const url =
+      "http://ddragon.leagueoflegends.com/cdn/13.3.1/data/en_US/champion.json";
 
-    const response = await fetch(
-      "https://league-of-legends-api1.p.rapidapi.com/champions",
-      options
-    );
+    const response = await fetch(url);
     const data = await response.json();
+    let allC = data.data;
 
     //hold temporary champions
     let c = [];
 
     //loop through objects and push into a new array
-    for (const property in data) {
-      c.push(data[property]);
+    for (const property in allC) {
+      c.push(allC[property]);
     }
     //get first 10 champions
     let slicedArray = c.slice(0, 10);
-
     //set champions
-    setChampions(slicedArray);
-    console.log(champions);
 
+    fetchAllChampions(slicedArray);
+  };
+
+  const fetchAllChampions = async (champions) => {
+    let champItem = [];
+    champions.forEach((champion) => {
+      const fetchNewChamps = async () => {
+        const response = await fetch(
+          `http://ddragon.leagueoflegends.com/cdn/13.3.1/data/en_US/champion/${champion.id}.json`
+        );
+        const data = await response.json();
+
+        //fix here --- it only fetches 1 - 3 champions only
+        setChampions(data.data[champion.id]);
+      };
+
+      fetchNewChamps();
+    });
+
+    console.log(champItem);
   };
 
   return (

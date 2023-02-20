@@ -3,7 +3,6 @@ import Champion from "../components/Champion";
 
 const Champions = () => {
   const [champions, setChampions] = useState([]);
-
   console.log(champions);
   useEffect(() => {
     fetchChampions();
@@ -39,15 +38,13 @@ const Champions = () => {
           `http://ddragon.leagueoflegends.com/cdn/13.3.1/data/en_US/champion/${champion.id}.json`
         );
         const data = await response.json();
-
-        //fix here --- it only fetches 1 - 3 champions only
-        setChampions(data.data[champion.id]);
+        champItem.push(data.data[champion.id]);
+        //set champions
+        setChampions(champItem);
       };
 
       fetchNewChamps();
     });
-
-    console.log(champItem);
   };
 
   return (
@@ -55,9 +52,7 @@ const Champions = () => {
       <h2 className='text-center uppercase text-2xl'>
         League of Legends ChampionsS
       </h2>
-      <div className='show-champions'>
-        <Champion champions={champions} />
-      </div>
+      <Champion champions={champions} />
     </div>
   );
 };
